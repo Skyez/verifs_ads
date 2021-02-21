@@ -1,13 +1,14 @@
 {{/*Trigger type: Reaction*/}}
 {{/*Trigger: Added reactions only*/}}
+{{/*Channel Restrictions: Your advertising channel*/}}
 
-{{/*Placer l'id du rôle permettant la vérification de publicité*/}}
+{{/*Set the id of the role allowing the advertisement verification*/}}
 {{ $role := 793098376043823104 }}
 
-{{/*Placer l'id du salon de logs*/}}
+{{/*Set the id of the log channel*/}}
 {{ $logs := 793100591559606292 }}
 
-{{/* NE TOUCHEZ PAS CETTE PARTIE*/}}
+{{/* Don't touch this !*/}}
 {{$key := joinStr "" "verif_tracker_"  .User.ID}}
 {{$DM := dbGet .User.ID "DM"}}
 {{$userVerif := dbGet 118 $key}}
