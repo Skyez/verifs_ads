@@ -18,38 +18,38 @@
 {{end}}
 {{$avatar := .User.AvatarURL "256"}}
 {{$accept := cembed 
-	"title" (joinStr "" "**" .User.Username " a validé la publicité de " .Message.Author "**")
-	"description" (joinStr "" .Message.Content "\n \n **Salon:** <#" .Channel.ID "> \n **Auteur:** " .Message.Author "")
+	"title" (joinStr "" "**" .User.Username " validated the advertisement of " .Message.Author "**")
+	"description" (joinStr "" .Message.Content "\n \n **Channel:** <#" .Channel.ID "> \n **Author:** " .Message.Author "")
 	"color" 454749 
 	"thumbnail" (sdict "url" $avatar)}}
 {{$remove1 := cembed 
-	"title" (joinStr "" "**" .User.Username " a supprimé la publicité de " .Message.Author " pour la raison: Publicité dans le salon inapproprié.**")
-	"description" (joinStr "" .Message.Content "\n \n **Salon:** <#" .Channel.ID "> \n **Auteur:** " .Message.Author "")
+	"title" (joinStr "" "**" .User.Username " removed advertising of " .Message.Author " for the reason: Inappropriate channel of advertising.**")
+	"description" (joinStr "" .Message.Content "\n \n **Channel:** <#" .Channel.ID "> \n **Author:** " .Message.Author "")
 	"color" 16711680
 	"thumbnail" (sdict "url" $avatar)}}
 {{$remove2 := cembed 
-	"title" (joinStr "" "**" .User.Username " a supprimé la publicité de " .Message.Author " pour la raison: Serveur interdit/illégal.**")
-	"description" (joinStr "" .Message.Content "\n \n **Salon:** <#" .Channel.ID "> \n **Auteur:** " .Message.Author "")
+	"title" (joinStr "" "**" .User.Username " removed advertising of " .Message.Author " for the reason: Forbidden/Illegal server.**")
+	"description" (joinStr "" .Message.Content "\n \n **Channel:** <#" .Channel.ID "> \n **Author:** " .Message.Author "")
 	"color" 16711680
 	"thumbnail" (sdict "url" $avatar)}}
 {{$remove3 := cembed 
-	"title" (joinStr "" "**" .User.Username " a supprimé la publicité de " .Message.Author " pour la raison: Lien d’invitation invalide.**")
-	"description" (joinStr "" .Message.Content "\n \n **Salon:** <#" .Channel.ID "> \n **Auteur:** " .Message.Author "")
+	"title" (joinStr "" "**" .User.Username " removed advertising of " .Message.Author " for the reason: Invalid invitation link.**")
+	"description" (joinStr "" .Message.Content "\n \n **Channel:** <#" .Channel.ID "> \n **Author:** " .Message.Author "")
 	"color" 16711680
 	"thumbnail" (sdict "url" $avatar)}}
 {{$remove4 := cembed 
-	"title" (joinStr "" "**" .User.Username " a supprimé la publicité de " .Message.Author " pour la raison: Publicité à contenu pornographique, raciste, ou haineux. **")
-	"description" (joinStr "" .Message.Content "\n \n **Salon:** <#" .Channel.ID "> \n **Auteur:** " .Message.Author "")
+	"title" (joinStr "" "**" .User.Username " removed advertising of " .Message.Author " for the reason: Advertising with pornographic, racist or hateful content. **")
+	"description" (joinStr "" .Message.Content "\n \n **Channel:** <#" .Channel.ID "> \n **Author:** " .Message.Author "")
 	"color" 16711680
 	"thumbnail" (sdict "url" $avatar)}}
 {{$remove5 := cembed 
-	"title" (joinStr "" "**" .User.Username " a supprimé la publicité de " .Message.Author " pour la raison: Autre Motif.**")
-	"description" (joinStr "" .Message.Content "\n \n **Salon:** <#" .Channel.ID "> \n **Auteur:** " .Message.Author "")
+	"title" (joinStr "" "**" .User.Username " removed advertising of " .Message.Author " for the reason: No description.**")
+	"description" (joinStr "" .Message.Content "\n \n **Channel:** <#" .Channel.ID "> \n **Author:** " .Message.Author "")
 	"color" 16711680
 	"thumbnail" (sdict "url" $avatar)}}
 {{$remove6 := cembed 
-	"title" (joinStr "" "**" .User.Username " a supprimé la publicité de " .Message.Author " pour la raison: Autre Motif.**")
-	"description" (joinStr "" .Message.Content "\n \n **Salon:** <#" .Channel.ID "> \n **Auteur:** " .Message.Author "")
+	"title" (joinStr "" "**" .User.Username " removed advertising of " .Message.Author " for the reason: Reason not specified.**")
+	"description" (joinStr "" .Message.Content "\n \n **Channel:** <#" .Channel.ID "> \n **Author:** " .Message.Author "")
 	"color" 16711680
 	"thumbnail" (sdict "url" $avatar)}}
 {{if eq .Reaction.Emoji.Name "✅"}}
@@ -59,7 +59,7 @@
 		{{sendMessage $logs $accept}}
 		{{dbSet 118 $key (add (toInt ($userVerif.Value)) 1)}}
 	{{else}}
-		{{sendDM "Tu n'es pas un modérateur !"}}
+		{{sendDM "You are not a moderator !"}}
 	{{end}}
 {{end}}
 {{if eq .Reaction.Emoji.Name "❎"}}
@@ -68,69 +68,69 @@
 		{{addReactions "1️⃣" "2️⃣" "3️⃣" "4️⃣" "5️⃣" "6️⃣"}}
 		{{if $DM}}
 		{{else}}
-			{{sendDM "__Voici les motifs de warn:__ \n1️⃣ Publicité dans le salon inapproprié. \n2️⃣ Serveur interdit/illégal. \n3️⃣ Lien d’invitation invalide. \n4️⃣ Publicité à contenu pornographique, raciste, ou haineux. \n5️⃣ Pas de description.\n6️⃣ Autre Motif."}}
+			{{sendDM "__Here are the motives of warn:__ \n1️⃣ Inappropriate channel of advertising \n2️⃣ Forbidden/Illegal server. \n3️⃣ Invalid invitation link. \n4️⃣ Advertising with pornographic, racist or hateful content. \n5️⃣ No description.\n6️⃣ Reason not specified."}}
 		{{end}}
 	{{else}}
-		{{sendDM "Tu n'es pas un modérateur !"}}
+		{{sendDM "You are not a moderator !"}}
 	{{end}}
 {{end}}
 {{if eq .Reaction.Emoji.Name "1️⃣"}}
 	{{if hasRoleID $role}} 
 		{{deleteMessage nil .Reaction.MessageID 0}}
-		{{exec "warn" .Message.Author "Publicité dans le salon inapproprié." }}
+		{{exec "warn" .Message.Author "Inappropriate channel of advertising." }}
 		{{sendMessage $logs $remove1}}
 		{{dbSet 118 $key (add (toInt ($userVerif.Value)) 1)}}
 	{{else}}
-		{{sendDM "Tu n'es pas un modérateur !"}}
+		{{sendDM "You are not a moderator !"}}
 	{{end}}
 {{end}}
 {{if eq .Reaction.Emoji.Name "2️⃣"}}
 	{{if hasRoleID $role}} 
 		{{deleteMessage nil .Reaction.MessageID 0}}
-		{{exec "warn" .Message.Author "Serveur interdit/illégal. " }}
+		{{exec "warn" .Message.Author "Forbidden/Illegal server. " }}
 		{{sendMessage $logs $remove2}}
 		{{dbSet 118 $key (add (toInt ($userVerif.Value)) 1)}}
 	{{else}}
-		{{sendDM "Tu n'es pas un modérateur !"}}
+		{{sendDM "You are not a moderator !"}}
 	{{end}}
 {{end}}
 {{if eq .Reaction.Emoji.Name "3️⃣"}}
 	{{if hasRoleID $role}} 
 		{{deleteMessage nil .Reaction.MessageID 0}}
-		{{exec "warn" .Message.Author "Lien d’invitation invalide." }}
+		{{exec "warn" .Message.Author "Invalid invitation link." }}
 		{{sendMessage $logs $remove3}}
 		{{dbSet 118 $key (add (toInt ($userVerif.Value)) 1)}}
 	{{else}}
-		{{sendDM "Tu n'es pas un modérateur !"}}
+		{{sendDM "You are not a moderator !"}}
 	{{end}}
 {{end}}
 {{if eq .Reaction.Emoji.Name "4️⃣"}}
 	{{if hasRoleID $role}} 
 		{{deleteMessage nil .Reaction.MessageID 0}}
-		{{exec "warn" .Message.Author "Publicité à contenu pornographique, raciste, ou haineux." }}
+		{{exec "warn" .Message.Author "Advertising with pornographic, racist or hateful content." }}
 		{{sendMessage $logs $remove4}}
 		{{dbSet 118 $key (add (toInt ($userVerif.Value)) 1)}}
 	{{else}}
-		{{sendDM "Tu n'es pas un modérateur !"}}
+		{{sendDM "You are not a moderator !"}}
 	{{end}}
 {{end}}
 {{if eq .Reaction.Emoji.Name "5️⃣"}}
 	{{if hasRoleID $role}} 
 		{{deleteMessage nil .Reaction.MessageID 0}}
-		{{exec "warn" .Message.Author "Pas de description." }}
+		{{exec "warn" .Message.Author "No description." }}
 		{{sendMessage $logs $remove5}}
 		{{dbSet 118 $key (add (toInt ($userVerif.Value)) 1)}}
 	{{else}}
-		{{sendDM "Tu n'es pas un modérateur !"}}
+		{{sendDM "You are not a moderator !"}}
 	{{end}}
 {{end}}
 {{if eq .Reaction.Emoji.Name "6️⃣"}}
 	{{if hasRoleID $role}} 
 		{{deleteMessage nil .Reaction.MessageID 0}}
-		{{exec "warn" .Message.Author "Raison non précisée." }}
+		{{exec "warn" .Message.Author "Reason not specified. }}
 		{{sendMessage $logs $remove5}}
 		{{dbSet 118 $key (add (toInt ($userVerif.Value)) 1)}}
 	{{else}}
-		{{sendDM "Tu n'es pas un modérateur !"}}
+		{{sendDM "You are not a moderator !"}}
 	{{end}}
 {{end}}
