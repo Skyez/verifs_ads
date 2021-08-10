@@ -127,7 +127,7 @@
 {{if eq .Reaction.Emoji.Name "6️⃣"}}
 	{{if hasRoleID $role}} 
 		{{deleteMessage nil .Reaction.MessageID 0}}
-		{{exec "warn" .Message.Author "Reason not specified. }}
+		{{exec "warn" .Message.Author "Reason not specified." }}
 		{{sendMessage $logs $remove5}}
 		{{dbSet 118 $key (add (toInt ($userVerif.Value)) 1)}}
 	{{else}}
